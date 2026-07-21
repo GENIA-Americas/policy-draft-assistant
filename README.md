@@ -26,14 +26,20 @@ Docs at http://127.0.0.1:8000/docs
 ```bash
 pytest tests/ -v
 ```
-7/7 tests pass as of last verified run.
+11/11 tests pass as of last verified run.
+
+## Auth
+All endpoints require an `X-API-Key` header. Keys are configured via the `API_KEYS`
+env var as `key1:org_one,key2:org_two` — each key authenticates its caller as exactly
+one org, and reads/writes are scoped to that org (a valid key for one org cannot read
+another org's drafts).
 
 ## API
 - `GET /clauses/{policy_type}` — list available clause keys/text for a policy type
   (`acceptable_use`, `data_governance`, `vendor_risk`).
-- `POST /policies` — submit org name, policy type, and selected clause keys; get back the
-  assembled policy text.
-- `GET /policies/{id}` — retrieve one draft.
+- `POST /policies` — submit policy type and selected clause keys; org name is derived
+  from your API key, not sent in the request body. Get back the assembled policy text.
+- `GET /policies/{id}` — retrieve one draft belonging to your org.
 - `GET /health`
 
 ## Extending the clause library
