@@ -9,7 +9,6 @@ PolicyType = Literal["acceptable_use", "data_governance", "vendor_risk"]
 class PolicyDraftCreate(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    org_name: str = Field(min_length=1, max_length=200)
     policy_type: PolicyType
     selected_clauses: list[str] = Field(min_length=1)
 
